@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="InventorySystem.Views.ShipmentInventory"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:InventorySystem.Views"
+             xmlns:vm="clr-namespace:InventorySystem.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <vm:ShipmentViewModel/>
+    </UserControl.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions >
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions >
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+
+        </Grid.ColumnDefinitions>
+
+        <Label  Content="Item Name"    Grid.Column="0" Grid.Row="0" Margin="5,0,0,5" />
+        <TextBox  Text ="{Binding Shipment.ItemName, UpdateSourceTrigger=PropertyChanged}"   Grid.Row="0" Grid.Column="1"
+                       Width="150" Margin="5,0,0,5"  IsTabStop="True" Name="ItemNameTxtBox"/>
+
+        <Label Content="Quantity"   Grid.Row="2" Grid.Column="0" Margin="5,0,0,5"/>
+        <TextBox  Width="150" Text="{Binding Shipment.Quantity , UpdateSourceTrigger=PropertyChanged}" Name="QuantityTxtBox" Grid.Row="2" Grid.Column="1" Margin="5,0,0,5"  PreviewTextInput="TextBox_PreviewTextInput"  IsTabStop="True">
+        </TextBox>
+        
+        
+
+        <Label Content="Destination" Grid.Column="0" Grid.Row="5" Margin="5,0,0,5" />
+        <TextBox Width="150" Text="{Binding Shipment.Destination, UpdateSourceTrigger= PropertyChanged }"  Grid.Row="5" Grid.Column="1"  Name="DestinationTxtBox"  Margin="5,0,0,5"  IsTabStop="True" ></TextBox>
+
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Grid.Row="6" Grid.ColumnSpan="3" Margin="5,5,5,5">
+            <Button Content="Save" Command="{Binding AddCommand}"  Name="BtnSave"  Margin="5"/>
+
+            <Button Content="Update" Command="{Binding UpdateCommand}"  Name="BtnUpdate" Margin="5"/>
+            <Button Content="Delete" Command="{Binding DeleteCommand}" Margin="5" Name="BtnDelete"/>
+        </StackPanel>
+        <DataGrid  x:Name="ShipmentGrid"  IsTabStop="True" ItemsSource="{Binding ShipmentList, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False"  CanUserAddRows="False" Grid.Row="8" Grid.ColumnSpan="3" Height="300"   IsReadOnly="True"    SelectionChanged="ShipmentGrid_SelectionChanged" >
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Sl No." Binding="{Binding Id}"  Visibility="Hidden"></DataGridTextColumn>
+                <DataGridTextColumn Header="Item Name" Binding="{Binding ItemName}" ></DataGridTextColumn>
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" ></DataGridTextColumn>
+
+                <DataGridTextColumn Header="Destination" Binding="{Binding Destination}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>
